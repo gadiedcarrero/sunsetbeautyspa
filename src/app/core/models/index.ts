@@ -53,6 +53,7 @@ export interface SpaService {
   categoria: 'facial' | 'corporal' | 'masajes' | 'unas' | 'depilacion' | 'otros';
   imagen?: string;
   activo: boolean;
+  destacado?: boolean;
 }
 
 // Contact form

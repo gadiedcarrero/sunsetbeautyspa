@@ -11,8 +11,7 @@ import { RouterModule } from '@angular/router';
       <div class="container">
         <nav class="nav">
           <a routerLink="/" class="logo">
-            <span class="logo-text">Sunset</span>
-            <span class="logo-accent">Beauty Spa</span>
+            <img src="/Sunset_logo.png" alt="Sunset Beauty Spa" class="logo-img" />
           </a>
 
           <button
@@ -73,23 +72,18 @@ import { RouterModule } from '@angular/router';
 
     .logo {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       text-decoration: none;
-      line-height: 1.1;
 
-      .logo-text {
-        font-family: $font-heading;
-        font-size: $font-size-xl;
-        font-weight: $font-weight-bold;
-        color: $color-text;
+      .logo-img {
+        height: 200px;
+        width: auto;
+        transition: height $transition-base;
       }
+    }
 
-      .logo-accent {
-        font-family: $font-heading;
-        font-size: $font-size-sm;
-        color: $color-primary;
-        letter-spacing: 2px;
-      }
+    .header.scrolled .logo-img {
+      height: 80px;
     }
 
     .nav-toggle {

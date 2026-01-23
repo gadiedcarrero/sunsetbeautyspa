@@ -29,6 +29,14 @@ export class SpaServicesService {
     );
   }
 
+  getFeaturedServices(): Observable<SpaService[]> {
+    return this.firebase.getCollection<SpaService>(
+      this.COLLECTION,
+      this.firebase.whereEqual('activo', true),
+      this.firebase.whereEqual('destacado', true)
+    );
+  }
+
   getServicesByCategory(category: string): Observable<SpaService[]> {
     return this.firebase.getCollection<SpaService>(
       this.COLLECTION,

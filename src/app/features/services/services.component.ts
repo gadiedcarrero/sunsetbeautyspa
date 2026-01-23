@@ -43,12 +43,10 @@ import { SpaService } from '../../core/models';
 
         <!-- Services Grid -->
         <div class="services-grid">
-          @for (service of filteredServices(); track service.id || service.nombre) {
+          @for (service of filteredServices(); track service.id) {
             <app-service-card [service]="service"></app-service-card>
           } @empty {
-            @for (service of defaultServices; track service.nombre) {
-              <app-service-card [service]="service"></app-service-card>
-            }
+            <p class="no-services">No hay servicios disponibles en esta categoria</p>
           }
         </div>
       </div>
@@ -147,6 +145,14 @@ import { SpaService } from '../../core/models';
       }
     }
 
+    .no-services {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: lighten($color-text, 30%);
+      font-style: italic;
+      padding: $spacing-2xl;
+    }
+
     .cta-section {
       background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 15%) 100%);
       padding: $spacing-3xl 0;
@@ -196,83 +202,8 @@ export class ServicesComponent implements OnInit {
     { value: 'depilacion', label: 'Depilacion' }
   ];
 
-  defaultServices: SpaService[] = [
-    {
-      nombre: 'Facial Rejuvenecedor',
-      descripcion: 'Tratamiento facial completo que hidrata, nutre y rejuvenece tu piel dejandola radiante y luminosa.',
-      categoria: 'facial',
-      duracion: '60 min',
-      precio: 85,
-      activo: true
-    },
-    {
-      nombre: 'Limpieza Facial Profunda',
-      descripcion: 'Limpieza profesional que elimina impurezas y puntos negros, dejando tu piel fresca y limpia.',
-      categoria: 'facial',
-      duracion: '45 min',
-      precio: 65,
-      activo: true
-    },
-    {
-      nombre: 'Masaje Relajante',
-      descripcion: 'Masaje corporal completo que alivia tensiones musculares y te transporta a un estado de relajacion total.',
-      categoria: 'masajes',
-      duracion: '90 min',
-      precio: 95,
-      activo: true
-    },
-    {
-      nombre: 'Masaje con Piedras Calientes',
-      descripcion: 'Terapia que combina masaje tradicional con piedras volcanicas calientes para una relajacion profunda.',
-      categoria: 'masajes',
-      duracion: '75 min',
-      precio: 110,
-      activo: true
-    },
-    {
-      nombre: 'Tratamiento Corporal Reductor',
-      descripcion: 'Tratamiento especializado que ayuda a reducir medidas y mejorar la apariencia de la piel.',
-      categoria: 'corporal',
-      duracion: '60 min',
-      precio: 90,
-      activo: true
-    },
-    {
-      nombre: 'Exfoliacion Corporal',
-      descripcion: 'Renovacion celular completa que deja tu piel suave, tersa y radiante.',
-      categoria: 'corporal',
-      duracion: '45 min',
-      precio: 70,
-      activo: true
-    },
-    {
-      nombre: 'Manicure Spa',
-      descripcion: 'Tratamiento completo para tus manos que incluye exfoliacion, hidratacion profunda y esmaltado.',
-      categoria: 'unas',
-      duracion: '45 min',
-      precio: 35,
-      activo: true
-    },
-    {
-      nombre: 'Pedicure Spa',
-      descripcion: 'Cuidado completo para tus pies con exfoliacion, masaje relajante y esmaltado de tu eleccion.',
-      categoria: 'unas',
-      duracion: '60 min',
-      precio: 45,
-      activo: true
-    },
-    {
-      nombre: 'Depilacion con Cera',
-      descripcion: 'Depilacion profesional con cera tibia para una piel suave y libre de vello por mas tiempo.',
-      categoria: 'depilacion',
-      duracion: '30-60 min',
-      precio: 25,
-      activo: true
-    }
-  ];
-
   filteredServices = computed(() => {
-    const allServices = this.services().length > 0 ? this.services() : this.defaultServices;
+    const allServices = this.services();
     if (this.selectedCategory() === 'all') {
       return allServices;
     }

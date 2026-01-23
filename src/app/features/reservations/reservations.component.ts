@@ -448,18 +448,6 @@ export class ReservationsComponent implements OnInit {
     '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM'
   ];
 
-  defaultServices: SpaService[] = [
-    { nombre: 'Facial Rejuvenecedor', descripcion: '', categoria: 'facial', duracion: '60 min', activo: true },
-    { nombre: 'Limpieza Facial Profunda', descripcion: '', categoria: 'facial', duracion: '45 min', activo: true },
-    { nombre: 'Masaje Relajante', descripcion: '', categoria: 'masajes', duracion: '90 min', activo: true },
-    { nombre: 'Masaje con Piedras Calientes', descripcion: '', categoria: 'masajes', duracion: '75 min', activo: true },
-    { nombre: 'Tratamiento Corporal Reductor', descripcion: '', categoria: 'corporal', duracion: '60 min', activo: true },
-    { nombre: 'Exfoliacion Corporal', descripcion: '', categoria: 'corporal', duracion: '45 min', activo: true },
-    { nombre: 'Manicure Spa', descripcion: '', categoria: 'unas', duracion: '45 min', activo: true },
-    { nombre: 'Pedicure Spa', descripcion: '', categoria: 'unas', duracion: '60 min', activo: true },
-    { nombre: 'Depilacion con Cera', descripcion: '', categoria: 'depilacion', duracion: '30-60 min', activo: true }
-  ];
-
   ngOnInit(): void {
     this.initForm();
     this.loadServices();
@@ -479,11 +467,7 @@ export class ReservationsComponent implements OnInit {
 
   private loadServices(): void {
     this.spaServicesService.getActiveServices().subscribe(services => {
-      if (services.length > 0) {
-        this.availableServices.set(services);
-      } else {
-        this.availableServices.set(this.defaultServices);
-      }
+      this.availableServices.set(services);
     });
   }
 

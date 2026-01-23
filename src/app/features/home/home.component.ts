@@ -55,11 +55,7 @@ import { SpaService } from '../../core/models';
           </div>
           <div class="intro-image">
             <div class="image-frame">
-              <div class="image-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              </div>
+              <img src="/espacio-dedicado.png" alt="Espacio dedicado a tu bienestar" class="intro-img">
             </div>
           </div>
         </div>
@@ -82,11 +78,7 @@ import { SpaService } from '../../core/models';
             }
           </div>
         } @else {
-          <div class="services-grid">
-            @for (service of defaultServices; track service.nombre) {
-              <app-service-card [service]="service"></app-service-card>
-            }
-          </div>
+          <p class="no-services">Pronto agregaremos nuestros tratamientos destacados</p>
         }
 
         <div class="text-center mt-4">
@@ -179,12 +171,12 @@ import { SpaService } from '../../core/models';
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, $color-secondary 0%, darken($color-secondary, 10%) 100%);
+      background: url('/hero.png') center center / cover no-repeat;
       overflow: hidden;
 
       &-overlay {
-        @include overlay(0.3);
-        background: linear-gradient(to bottom, transparent 50%, rgba($color-text, 0.3) 100%);
+        @include overlay(0.5);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
       }
 
       &-content {
@@ -196,8 +188,9 @@ import { SpaService } from '../../core/models';
 
         h1 {
           font-size: $font-size-4xl;
-          color: $color-text;
+          color: $color-white;
           margin-bottom: $spacing-lg;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
           @include respond-below('md') {
             font-size: $font-size-2xl;
@@ -206,11 +199,12 @@ import { SpaService } from '../../core/models';
 
         p {
           font-size: $font-size-lg;
-          color: lighten($color-text, 10%);
+          color: rgba(255, 255, 255, 0.95);
           margin-bottom: $spacing-xl;
           max-width: 600px;
           margin-left: auto;
           margin-right: auto;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 
           @include respond-below('md') {
             font-size: $font-size-base;
@@ -226,12 +220,12 @@ import { SpaService } from '../../core/models';
 
         .btn--outline {
           background-color: transparent;
-          border-color: $color-text;
-          color: $color-text;
+          border-color: $color-white;
+          color: $color-white;
 
           &:hover {
-            background-color: $color-text;
-            color: $color-white;
+            background-color: $color-white;
+            color: $color-primary;
           }
         }
       }
@@ -246,14 +240,14 @@ import { SpaService } from '../../core/models';
         span {
           display: block;
           font-size: $font-size-sm;
-          color: $color-text;
+          color: $color-white;
           margin-bottom: $spacing-sm;
         }
 
         .scroll-indicator {
           width: 24px;
           height: 40px;
-          border: 2px solid $color-text;
+          border: 2px solid $color-white;
           border-radius: 12px;
           margin: 0 auto;
           position: relative;
@@ -266,7 +260,7 @@ import { SpaService } from '../../core/models';
             transform: translateX(-50%);
             width: 4px;
             height: 8px;
-            background-color: $color-primary;
+            background-color: $color-white;
             border-radius: 2px;
             animation: scroll 2s infinite;
           }
@@ -347,12 +341,12 @@ import { SpaService } from '../../core/models';
           }
         }
 
-        .image-placeholder {
-          @include flex-center;
+        .intro-img {
+          width: 100%;
           height: 400px;
-          background-color: $color-secondary;
-          color: $color-primary;
+          object-fit: cover;
           border-radius: $border-radius-lg;
+          display: block;
         }
       }
     }
@@ -384,6 +378,13 @@ import { SpaService } from '../../core/models';
       @include respond-below('md') {
         grid-template-columns: 1fr;
       }
+    }
+
+    .no-services {
+      text-align: center;
+      color: lighten($color-text, 30%);
+      font-style: italic;
+      padding: $spacing-2xl;
     }
 
     // Why Us Section
@@ -507,35 +508,8 @@ export class HomeComponent implements OnInit {
   private spaServicesService = inject(SpaServicesService);
   featuredServices = signal<SpaService[]>([]);
 
-  defaultServices: SpaService[] = [
-    {
-      nombre: 'Facial Rejuvenecedor',
-      descripcion: 'Tratamiento facial completo que hidrata, nutre y rejuvenece tu piel dejandola radiante.',
-      categoria: 'facial',
-      duracion: '60 min',
-      precio: 85,
-      activo: true
-    },
-    {
-      nombre: 'Masaje Relajante',
-      descripcion: 'Masaje corporal completo que alivia tensiones y te transporta a un estado de total relajacion.',
-      categoria: 'masajes',
-      duracion: '90 min',
-      precio: 95,
-      activo: true
-    },
-    {
-      nombre: 'Manicure Spa',
-      descripcion: 'Tratamiento completo para tus manos que incluye exfoliacion, hidratacion y esmaltado.',
-      categoria: 'unas',
-      duracion: '45 min',
-      precio: 35,
-      activo: true
-    }
-  ];
-
   ngOnInit(): void {
-    this.spaServicesService.getActiveServices().subscribe(services => {
+    this.spaServicesService.getFeaturedServices().subscribe(services => {
       this.featuredServices.set(services.slice(0, 3));
     });
   }
