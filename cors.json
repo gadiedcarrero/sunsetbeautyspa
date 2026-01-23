@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["https://sunsetbeautyspa.com", "https://www.sunsetbeautyspa.com", "http://localhost:4200"],
+    "method": ["GET", "HEAD"],
+    "maxAgeSeconds": 3600
+  }
+]

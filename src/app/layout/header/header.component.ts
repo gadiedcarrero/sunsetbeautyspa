@@ -64,10 +64,16 @@ import { RouterModule } from '@angular/router';
 
     .container {
       @include container;
+      position: relative;
     }
 
     .nav {
       @include flex-between;
+
+      @include respond-below('lg') {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
 
     .logo {
@@ -75,15 +81,31 @@ import { RouterModule } from '@angular/router';
       align-items: center;
       text-decoration: none;
 
+      @include respond-below('lg') {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: $spacing-sm;
+      }
+
       .logo-img {
         height: 200px;
         width: auto;
         transition: height $transition-base;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+
+        @include respond-below('lg') {
+          height: 120px;
+        }
       }
     }
 
     .header.scrolled .logo-img {
       height: 80px;
+
+      @include respond-below('lg') {
+        height: 60px;
+      }
     }
 
     .nav-toggle {
@@ -99,6 +121,9 @@ import { RouterModule } from '@angular/router';
 
       @include respond-below('lg') {
         display: flex;
+        position: absolute;
+        right: $spacing-lg;
+        top: $spacing-lg;
       }
 
       span {
