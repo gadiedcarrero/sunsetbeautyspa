@@ -9,7 +9,7 @@ export const environment = {
     appId: '1:79986764945:web:9f221ed700b205320da330',
   },
   whatsapp: {
-    phoneNumber: '593990864709',
+    phoneNumber: '593998830931',
     message: 'Hola, me gustaría obtener más información sobre sus servicios.',
   },
 };
