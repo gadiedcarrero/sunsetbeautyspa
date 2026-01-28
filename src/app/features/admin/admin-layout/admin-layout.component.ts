@@ -10,10 +10,9 @@ import { AuthService } from '../../../core/services/auth.service';
   template: `
     <div class="admin-layout">
       <aside class="sidebar">
-        <div class="brand">
-          <span class="brand-title">Sunset</span>
-          <span class="brand-subtitle">Admin</span>
-        </div>
+        <a class="brand-link" routerLink="/">
+          <img src="/Sunset_logo.png" alt="Sunset Beauty Spa" class="brand-logo" />
+        </a>
         <nav class="nav">
           <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
           <a routerLink="/admin/clientes" routerLinkActive="active">Clientes</a>
@@ -53,23 +52,17 @@ import { AuthService } from '../../../core/services/auth.service';
       gap: $spacing-xl;
     }
 
-    .brand {
+    .brand-link {
       display: flex;
-      flex-direction: column;
-      gap: $spacing-xs;
-      font-family: $font-heading;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
     }
 
-    .brand-title {
-      font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
-    }
-
-    .brand-subtitle {
-      font-size: $font-size-sm;
-      color: $color-primary;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    .brand-logo {
+      width: 150px;
+      max-width: 100%;
+      height: auto;
     }
 
     .nav {
