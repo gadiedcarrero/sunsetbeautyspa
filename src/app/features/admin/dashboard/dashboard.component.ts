@@ -1,5 +1,6 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ClientService } from '../../../core/services/client.service';
 import { ReservationService } from '../../../core/services/reservation.service';
@@ -9,23 +10,23 @@ import { Client, Conversation, Reservation } from '../../../core/models';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <section class="dashboard">
       <h2>Resumen</h2>
       <div class="stats-grid">
-        <div class="stat-card">
+        <a class="stat-card" routerLink="/admin/clientes">
           <span class="label">Clientes nuevos</span>
           <span class="value">{{ newClientsCount() }}</span>
-        </div>
-        <div class="stat-card">
+        </a>
+        <a class="stat-card" routerLink="/admin/reservaciones">
           <span class="label">Reservas pendientes</span>
           <span class="value">{{ pendingReservationsCount() }}</span>
-        </div>
-        <div class="stat-card">
-          <span class="label">Mensajes sin leer</span>
+        </a>
+        <a class="stat-card" routerLink="/admin/conversaciones">
+          <span class="label">Conversaciones activas</span>
           <span class="value">{{ activeConversationsCount() }}</span>
-        </div>
+        </a>
       </div>
 
       <div class="panels">
@@ -35,8 +36,10 @@ import { Client, Conversation, Reservation } from '../../../core/models';
             <ul>
               @for (client of recentClients(); track client.id) {
                 <li>
-                  <span>{{ client.nombre }}</span>
-                  <span class="muted">{{ formatDate(client.fechaCreacion) }}</span>
+                  <a class="panel-link" [routerLink]="['/admin/clientes', client.id]">
+                    <span>{{ client.nombre }}</span>
+                    <span class="muted">{{ formatDate(client.fechaCreacion) }}</span>
+                  </a>
                 </li>
               }
             </ul>
@@ -51,8 +54,10 @@ import { Client, Conversation, Reservation } from '../../../core/models';
             <ul>
               @for (reservation of pendingReservations(); track reservation.id) {
                 <li>
-                  <span>{{ reservation.nombre }}</span>
-                  <span class="muted">{{ reservation.fechaSolicitada }} {{ reservation.horaSolicitada }}</span>
+                  <a class="panel-link" routerLink="/admin/reservaciones">
+                    <span>{{ reservation.nombre }}</span>
+                    <span class="muted">{{ reservation.fechaSolicitada }} {{ reservation.horaSolicitada }}</span>
+                  </a>
                 </li>
               }
             </ul>
@@ -67,8 +72,10 @@ import { Client, Conversation, Reservation } from '../../../core/models';
             <ul>
               @for (conversation of activeConversations(); track conversation.id) {
                 <li>
-                  <span>{{ conversation.telefono }}</span>
-                  <span class="muted">{{ formatDate(conversation.fechaUltimoMensaje) }}</span>
+                  <a class="panel-link" [routerLink]="['/admin/conversaciones', conversation.id]">
+                    <span>{{ conversation.telefono }}</span>
+                    <span class="muted">{{ formatDate(conversation.fechaUltimoMensaje) }}</span>
+                  </a>
                 </li>
               }
             </ul>
@@ -103,6 +110,15 @@ import { Client, Conversation, Reservation } from '../../../core/models';
       display: flex;
       flex-direction: column;
       gap: $spacing-xs;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .stat-card:hover,
+    .stat-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
     }
 
     .label {
@@ -142,10 +158,21 @@ import { Client, Conversation, Reservation } from '../../../core/models';
       }
 
       li {
-        display: flex;
-        justify-content: space-between;
-        gap: $spacing-md;
+        margin: 0;
       }
+    }
+
+    .panel-link {
+      display: flex;
+      justify-content: space-between;
+      gap: $spacing-md;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .panel-link:hover,
+    .panel-link:focus-visible {
+      text-decoration: underline;
     }
 
     .muted {
